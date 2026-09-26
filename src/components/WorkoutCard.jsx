@@ -40,7 +40,7 @@ export default function WorkoutCard({ workout }) {
         {/* Card Footer with Duration, Calories and Rating */}
         <div className="flex items-center justify-between pt-3 border-t border-slate-800/60 text-xs text-slate-300 font-semibold">
           <span>⏱ {workout.duration || '15 min'}</span>
-          <span>🔥 {workout.caloriesBurned || workout.calories || '100 kcal'}</span>
+          <span>🔥 {workout.caloriesBurned || workout.calories || 100} kcal</span>
           {workout.rating && (
             <span className="text-amber-400 font-bold">★ {workout.rating}</span>
           )}
