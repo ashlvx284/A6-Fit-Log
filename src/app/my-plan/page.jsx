@@ -172,7 +172,7 @@ export default function MyPlan() {
                   {/* Right Actions */}
                   <div className="flex items-center gap-3 w-full md:w-auto justify-end">
                     <Link
-                      href={`/workouts/${workout.id}`}
+                      href={`/workout/${workout.id}`}
                       className="border border-slate-700 hover:border-slate-500 text-white font-extrabold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition-all"
                     >
                       View Details
