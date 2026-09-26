@@ -315,6 +315,13 @@ export function WorkoutProvider({ children }) {
     showToast('Removed from plan');
   };
 
+  const removeFromSaved = (id) => {
+    const updated = savedWorkouts.filter((item) => String(item.id) !== String(id));
+    setSavedWorkouts(updated);
+    localStorage.setItem('fitlog_saved', JSON.stringify(updated));
+    showToast('Removed from saved');
+  };
+
   const clearRoutine = () => {
     setTodayPlan([]);
     localStorage.removeItem('fitlog_today_plan');
@@ -341,6 +348,7 @@ export function WorkoutProvider({ children }) {
         savedWorkouts,
         addToTodayPlan,
         removeFromRoutine,
+        removeFromSaved,
         clearRoutine,
         saveForLater,
         toastMessage,
