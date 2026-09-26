@@ -63,12 +63,12 @@ export function FitProvider({ children }) {
   const addToRoutine = (workout) => {
     const exists = routine.find((item) => item.id === workout.id);
     if (exists) {
-      toast.error('Workout already in your routine!');
+      toast.error(`${workout.name} is already in your routine!`);
       return;
     }
     const updated = [...routine, workout];
     saveRoutineToStorage(updated);
-    toast.success(${workout.name} added to routine!);
+    toast.success(`${workout.name} added to routine!`);
   };
 
   const removeFromRoutine = (id) => {
