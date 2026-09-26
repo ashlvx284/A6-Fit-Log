@@ -1,54 +1,50 @@
-'use client';
-
 import Link from 'next/link';
-import { useFit } from '@/context/FitContext';
+import Image from 'next/image';
 
 export default function WorkoutCard({ workout }) {
-  const { routine, addToRoutine, removeFromRoutine } = useFit();
-
-  const isAdded = routine.some((item) => item.id === workout.id);
-
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 shadow-lg flex flex-col justify-between hover:border-emerald-500/50 transition-all">
-      <div>
-        <div className="flex justify-between items-start mb-3">
-          <h3 className="text-xl font-bold text-white">{workout.name}</h3>
-          <span className="bg-emerald-500/10 text-emerald-400 text-xs font-semibold px-2.5 py-1 rounded-full border border-emerald-500/20">
-            {workout.category}
+    <div className="bg-[#16181d] border border-slate-800/80 rounded-2xl overflow-hidden hover:border-slate-700 transition-all flex flex-col justify-between shadow-xl">
+      {/* Workout Image */}
+      {workout.image && (
+        <div className="relative w-full h-48 bg-slate-900">
+          <Image
+            src={workout.image}
+            alt={workout.name || 'Workout'}
+            fill
+            className="object-cover"
+          />
+        </div>
+      )}
+
+      {/* Card Content */}
+      <div className="p-5 flex flex-col justify-between flex-grow space-y-3">
+        <div>
+          {/* Category / Muscle Group Badge */}
+          <span className="text-xs font-extrabold text-[#ccff00] uppercase tracking-wider">
+            {workout.category || workout.muscle || 'General'}
           </span>
-        </div>
-        <p className="text-slate-400 text-sm mb-4 line-clamp-2">
-          {workout.description}
-        </p>
-        <div className="flex gap-4 text-xs text-slate-300 font-medium mb-5">
-          <span>⏱️ {workout.duration}</span>
-          <span>🔥 {workout.calories} kcal</span>
-        </div>
-      </div>
 
-      <div className="flex items-center gap-2 pt-3 border-t border-slate-800">
-        <Link
-          href={`/workout/${workout.id}`}
-          className="flex-1 text-center bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium py-2 rounded-lg transition-colors"
-        >
-          Details
-        </Link>
+          {/* Workout Title Link */}
+          <Link href={`/workout/${workout.id}`}>
+            <h3 className="text-lg font-black text-white hover:text-[#ccff00] transition-colors mt-1">
+              {workout.name}
+            </h3>
+          </Link>
 
-        {isAdded ? (
-          <button
-            onClick={() => removeFromRoutine(workout.id)}
-            className="flex-1 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-sm font-medium py-2 rounded-lg transition-colors"
-          >
-            Remove
-          </button>
-        ) : (
-          <button
-            onClick={() => addToRoutine(workout)}
-            className="flex-1 bg-emerald-500 hover:bg-emerald-600 text-slate-900 text-sm font-semibold py-2 rounded-lg transition-colors"
-          >
-            + Add
-          </button>
-        )}
+          {/* Equipment Info */}
+          <p className="text-slate-400 text-xs font-medium mt-1">
+            {workout.equipment || workout.bodyPart || 'Bodyweight'}
+          </p>
+        </div>
+
+        {/* Card Footer with Duration, Calories and Rating */}
+        <div className="flex items-center justify-between pt-3 border-t border-slate-800/60 text-xs text-slate-300 font-semibold">
+          <span>⏱ {workout.duration || '15 min'}</span>
+          <span>🔥 {workout.caloriesBurned || workout.calories || '100 kcal'}</span>
+          {workout.rating && (
+            <span className="text-amber-400 font-bold">★ {workout.rating}</span>
+          )}
+        </div>
       </div>
     </div>
   );

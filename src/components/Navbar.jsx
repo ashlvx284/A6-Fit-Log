@@ -1,60 +1,48 @@
 'use client';
 
-import Link from 'next/link';
 import Image from 'next/image';
-import { useFit } from '@/context/FitContext';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useWorkouts } from '@/context/FitContext';
 
 export default function Navbar() {
-  const { routine } = useFit();
+  const pathname = usePathname();
+  const { todayPlan, savedWorkouts } = useWorkouts();
+  const isActive = (path) => pathname === path;
 
   return (
-    <nav className="bg-slate-900 text-white sticky top-0 z-50 shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        
-        {/* Logo & Brand */}
-        <Link href="/" className="flex items-center gap-2">
-          <Image
-            src="/assets/logo.png"
-            alt="FitLog Logo"
-            width={36}
-            height={36}
-            className="rounded-full"
-          />
-          <span className="text-xl font-bold tracking-wide text-emerald-400">
-            FitLog
-          </span>
+    <header className="w-full bg-[#121417] border-b border-slate-800/80 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2.5">
+          <Image src="/assets/logo.png" alt="Logo" width={28} height={28} className="w-7 h-7 object-contain" />
+          <span className="text-lg font-black tracking-wider text-white uppercase">FITLOG</span>
         </Link>
 
-        {/* Navigation Links */}
-        <div className="flex items-center gap-6">
-          <Link
-            href="/"
-            className="hover:text-emerald-400 transition-colors font-medium text-sm sm:text-base"
-          >
-            Home
+        <nav className="hidden md:flex items-center gap-4">
+          <Link href="/" className={`text-xs font-extrabold uppercase px-4 py-2 rounded-xl transition-all ${isActive('/') ? 'bg-[#ccff00] text-slate-950 font-black' : 'text-slate-300 hover:text-white'}`}>
+            Workouts
           </Link>
-          
-          <Link
-            href="/my-routine"
-            className="relative hover:text-emerald-400 transition-colors font-medium text-sm sm:text-base"
-          >
-            My Routine
-            {routine.length > 0 && (
-              <span className="absolute -top-2 -right-4 bg-emerald-500 text-slate-900 text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
-                {routine.length}
-              </span>
-            )}
+          <Link href="/my-plan" className={`text-xs font-extrabold uppercase px-4 py-2 rounded-xl transition-all ${isActive('/my-plan') ? 'bg-[#ccff00] text-slate-950 font-black' : 'text-slate-300 hover:text-white'}`}>
+            My Plan
+          </Link>
+        </nav>
+
+        <div className="flex items-center gap-4">
+          <Link href="/my-plan" className="flex items-center gap-2 bg-[#1b1e24] hover:bg-[#22262e] border border-slate-800 px-3.5 py-1.5 rounded-full transition-all">
+            <span className="text-xs font-bold text-white tracking-wide">Plan</span>
+            <span className="w-6 h-6 bg-[#ccff00] text-slate-950 font-black text-xs rounded-full flex items-center justify-center">
+              {todayPlan?.length || 0}
+            </span>
           </Link>
 
-          <Link
-            href="/add-workout"
-            className="bg-emerald-500 hover:bg-emerald-600 text-slate-900 font-semibold px-4 py-1.5 rounded-lg text-sm transition-all"
-          >
-            + Add Workout
+          <Link href="/my-plan" className="flex items-center gap-2 bg-[#1b1e24] hover:bg-[#22262e] border border-slate-800 px-3.5 py-1.5 rounded-full transition-all">
+            <span className="text-xs font-bold text-white tracking-wide">Saved</span>
+            <span className="w-6 h-6 bg-transparent border border-slate-600 text-white font-black text-xs rounded-full flex items-center justify-center">
+              {savedWorkouts?.length || 0}
+            </span>
           </Link>
         </div>
-
       </div>
-    </nav>
+    </header>
   );
 }

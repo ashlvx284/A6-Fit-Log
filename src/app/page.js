@@ -1,27 +1,32 @@
 'use client';
 
 import Image from 'next/image';
-import { useFit } from '@/context/FitContext';
 import WorkoutCard from '@/components/WorkoutCard';
+import { useFit } from '@/context/FitContext';
 
-export default function HomePage() {
+export default function Home() {
   const { workouts } = useFit();
 
   return (
     <div className="space-y-10">
-      {/* Banner Section */}
-      <section className="relative rounded-2xl overflow-hidden bg-gradient-to-r from-emerald-900/40 to-slate-900 border border-slate-800 p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div className="space-y-4 max-w-xl text-center md:text-left">
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-white leading-tight">
-            Track Your Workouts, <br />
-            <span className="text-emerald-400">Reach Your Peak.</span>
+      {/* Hero Banner Section */}
+      <div className="bg-[#16181d] border border-slate-800/80 rounded-2xl p-6 md:p-10 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="max-w-xl space-y-4">
+          <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tight leading-none">
+            TRAIN WITH INTENT. <br /> LOG EVERY SET.
           </h1>
-          <p className="text-slate-300 text-sm sm:text-base">
-            Explore hundreds of workouts, build your custom daily routines, and achieve your fitness goals step by step.
+          <p className="text-slate-400 text-xs md:text-sm leading-relaxed max-w-md">
+            FitLog is a dark, no-nonsense gym companion: pick a lift, lock it into today’s plan, and watch the week’s work add up.
           </p>
+          <div>
+            <button className="bg-[#ccff00] hover:bg-[#b8e600] text-slate-950 font-extrabold text-xs uppercase tracking-wider px-5 py-2.5 rounded transition-colors">
+              BROWSE WORKOUTS
+            </button>
+          </div>
         </div>
 
-        <div className="relative w-48 h-48 sm:w-64 sm:h-64 flex-shrink-0">
+        {/* Hero Banner Image */}
+        <div className="relative w-full md:w-[320px] h-48 md:h-56">
           <Image
             src="/assets/banner.png"
             alt="FitLog Banner"
@@ -30,23 +35,26 @@ export default function HomePage() {
             priority
           />
         </div>
-      </section>
+      </div>
 
-      {/* Workout Grid Section */}
-      <section className="space-y-6">
-        <div className="flex justify-between items-center border-b border-slate-800 pb-4">
-          <h2 className="text-2xl font-bold text-white">Workout Library</h2>
-          <span className="text-sm text-slate-400 font-medium">
-            Total: {workouts.length} exercises
-          </span>
+      {/* Library Grid Section */}
+      <div className="space-y-4">
+        <div>
+          <h2 className="text-lg font-black text-white uppercase tracking-wider">
+            THE LIBRARY
+          </h2>
+          <p className="text-xs text-slate-400">
+            Twelve lifts covering every major muscle group.
+          </p>
         </div>
 
+        {/* 3 Columns Responsive Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {workouts.map((workout) => (
             <WorkoutCard key={workout.id} workout={workout} />
           ))}
         </div>
-      </section>
+      </div>
     </div>
   );
 }
